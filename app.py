@@ -4,12 +4,12 @@ app = Flask(__name__)
 
 mins = "25"
 sec = "00"
+#short break = 5 mins, long break = 15-20 mins
 
 @app.route("/start")
 def start():
     mins = "24"
     sec = "59"
-    print("hi")
     return render_template('index.html', minute = mins, seconds = sec)
     
 
