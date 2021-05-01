@@ -6,14 +6,13 @@ mins = "25"
 sec = "00"
 #short break = 5 mins, long break = 15-20 mins
 
-@app.route("/start")
+@app.route("/start") #play button
 def start():
     mins = "24"
     sec = "59"
     return render_template('index.html', minute = mins, seconds = sec)
     
-
-@app.route("/")
+@app.route("/") #page load/restart button
 def main():
     return render_template('index.html', minute = "25", seconds = "00")
 
