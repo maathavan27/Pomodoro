@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-color: tomato;">
     <head>
         <title>Pomodoro Timer</title>
         <meta charset="UTF-8">
@@ -8,24 +8,25 @@
         <link href="css/styles.css" rel="stylesheet">
     </head>
     <body>
-        
         <div class = "uk-container">
             <!--Header-->
             <h1 class="uk-text-center">Pomodoro App</h1>
             <!-- Timer-->
-                <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center uk-margin-large-top" uk-grid>
+            <div class = "uk-container">
+                <div class=" uk-position-medium uk-position-center uk-text-center uk-margin-large-top" uk-grid>
                     <div>
-                        <div class="uk-background-muted uk-padding">Item</div>
+                        <div class="uk-background-secondary uk-padding uk-light">{{minute}}:{{seconds}}</div>
                     </div>
-                    <div>
-                        <div class="uk-background-primary uk-padding uk-light uk-width-1-3@m">Item</div>
-                    </div>
-                    <div>
-                        <div class="uk-background-secondary uk-padding uk-light">Item</div>
-                    </div>
+                </div>
             </div>
         </div>
-
+        <!-- Start and restart-->
+        <div class = "uk-container">
+            <button class="uk-button uk-button-secondary" onclick="start()">Play</button>
+            <a href = ""><button class="uk-button uk-button-secondary">Restart</button></a>
+        </div>
+        <script type=text/javascript src="{{
+            url_for('static', filename='jquery.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.5.9/js/uikit.min.js" 
                 integrity="sha512-OZ9Sq7ecGckkqgxa8t/415BRNoz2GIInOsu8Qjj99r9IlBCq2XJlm9T9z//D4W1lrl+xCdXzq0EYfMo8DZJ+KA==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.5.9/js/uikit-icons.min.js" 
