@@ -10,21 +10,26 @@
     <body style = "background-color: cornsilk;">
         <div class = "uk-container">
             <!--Header-->
-            <h1 class="uk-text-center">Pomodoro App</h1>
+            <h1 class="uk-text-center"style = "position:relative; top:30px; ">Pomodoro App</h1>
             <!-- Timer-->
             <div class = "uk-container">
                 <div class=" uk-position-medium uk-position-center uk-text-center uk-margin-large-top" uk-grid>
                     <div>
-                        <div class="uk-background-secondary uk-padding uk-light uk-text-large" id="timer" style="font-size: 100px">25:00</div>
+                        <div class="uk-background-secondary uk-padding uk-light uk-text-large" id="timer" style="font-size: 100px; position:relative; top:-70px;right:20px">25:00</div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Start and restart-->
-        <div class = "uk-container">
+        <div class = "uk-container uk-container-small" style = "position:relative; left:346px; top:525px; ">
             <button class="uk-button uk-button-secondary " onclick="startTimer()" id = "play_button" >Play</button>
             <button class="uk-button uk-button-secondary" onclick="restartTimer()">Restart</button>
         </div>
+
+        <div class = "uk-container" style = "position:relative; left:0px; top:550px;">
+            <progress id="js-progressbar" class="uk-progress" value="0" max="1500" ></progress>
+        </div>
+
         <script type=text/javascript src="{{
             url_for('static', filename='jquery.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.5.9/js/uikit.min.js" 
@@ -32,8 +37,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.5.9/js/uikit-icons.min.js" 
                 integrity="sha512-hcz3GoZLfjU/z1OyArGvM1dVgrzpWcU3jnYaC6klc2gdy9HxrFkmoWmcUYbraeS+V/GWSgfv6upr9ff4RVyQPw==" crossorigin="anonymous"></script>
 
+            
+
         <script type="application/javascript">
             var isOn = false;
+            var bar = document.getElementById('js-progressbar');
             const timerElement = document.getElementById("timer");
             const playbutton = document.getElementById("play_button");
             let timerCounter;
@@ -52,6 +60,7 @@
                 console.log("Restart");
                 quitTimer = true;
                 playbutton.disabled= false;
+                bar.value =0; 
             } 
             function startTimer(){
                 playbutton.disabled = true;
@@ -71,22 +80,27 @@
                         //clearInterval(interval);
                         if (maxTime == regular) { //end of regular -> either short pause or long pause
                             if (shortPauseCount == 4) {
+                                
                                 maxTime = longPause;
                                 shortPauseCount = 0;
                             } else {
+                                
                                 maxTime = shortPause;
                                 shortPauseCount++;
                             }
                         } else if (maxTime == shortPause) { //end of short pause -> back to regular
                             maxTime = regular;
+                           
                         } else if (maxTime == longPause) { //end of long pause -> back to regular
                             maxTime = regular;
                         }
                         timerCounter = maxTime;
+                        bar.max = maxTime;
+                        bar.value =0; 
                     }
 
                     console.log(timerCounter);
-
+                    bar.value +=1; 
                     timerCounter = timerCounter - 1;
 
                     var minutes = Math.floor(timerCounter/60);
