@@ -25,12 +25,18 @@
             <button class="uk-button uk-button-secondary" onclick="startTimer()">Play</button>
             <button class="uk-button uk-button-secondary" onclick="restartTimer()">Restart</button>
         </div>
+
+        <!--source: https://notificationsounds.com/notification-sounds/long-expected-548-->
+        <audio preload="auto" id="audio">
+            <source src="../notification.mp3" type="audio/mpeg">
+        </audio>
+
         <script type=text/javascript src="{{
             url_for('static', filename='jquery.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.5.9/js/uikit.min.js" 
                 integrity="sha512-OZ9Sq7ecGckkqgxa8t/415BRNoz2GIInOsu8Qjj99r9IlBCq2XJlm9T9z//D4W1lrl+xCdXzq0EYfMo8DZJ+KA==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.5.9/js/uikit-icons.min.js" 
-                integrity="sha512-hcz3GoZLfjU/z1OyArGvM1dVgrzpWcU3jnYaC6klc2gdy9HxrFkmoWmcUYbraeS+V/GWSgfv6upr9ff4RVyQPw==" crossorigin="anonymous"></script>
+                integrity="sha512-hcz3GoZLfjU/z1OyArGvM1dVgrzpWcU3jnYaC6klc2gdy9HxrFkmoWmcUYbraeS+V/GWSgfv6upr9ff4RVyQPw==" crossorigin="anonymous"></script>     
 
         <script type="application/javascript">
             var isOn = false;
@@ -38,6 +44,9 @@
             let timerCounter;
             var quitTimer = false;
             var shortPauseCount = 0;
+
+            // notification audio
+            const audioElement = document.getElementById("audio")
 
             var regular = 1500; //25 mins
             var shortPause = 300; //5 mins
@@ -65,6 +74,11 @@
                         return;
                     }
                     if (timerCounter <= 0) {
+
+                        // play notification sound from the start
+                        audioElement.currentTime = 0;
+                        audioElement.play();
+                        
                         //clearInterval(interval);
                         if (maxTime == regular) { //end of regular -> either short pause or long pause
                             if (shortPauseCount == 4) {
