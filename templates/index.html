@@ -15,15 +15,15 @@
             <div class = "uk-container">
                 <div class=" uk-position-medium uk-position-center uk-text-center uk-margin-large-top" uk-grid>
                     <div>
-                        <div class="uk-background-secondary uk-padding uk-light">{{minute}}:{{seconds}}</div>
+                        <div class="uk-background-secondary uk-padding uk-light" id="timer">25:00</div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Start and restart-->
         <div class = "uk-container">
-            <button class="uk-button uk-button-secondary" onclick="start()">Play</button>
-            <a href = ""><button class="uk-button uk-button-secondary">Restart</button></a>
+            <button class="uk-button uk-button-secondary" onclick="startTimer()">Play</button>
+            <button class="uk-button uk-button-secondary">Restart</button>
         </div>
         <script type=text/javascript src="{{
             url_for('static', filename='jquery.js') }}"></script>
@@ -31,5 +31,32 @@
                 integrity="sha512-OZ9Sq7ecGckkqgxa8t/415BRNoz2GIInOsu8Qjj99r9IlBCq2XJlm9T9z//D4W1lrl+xCdXzq0EYfMo8DZJ+KA==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.5.9/js/uikit-icons.min.js" 
                 integrity="sha512-hcz3GoZLfjU/z1OyArGvM1dVgrzpWcU3jnYaC6klc2gdy9HxrFkmoWmcUYbraeS+V/GWSgfv6upr9ff4RVyQPw==" crossorigin="anonymous"></script>
+
+        <script type="application/javascript">
+            function startTimer(){
+                const timerElement = document.getElementById("timer");
+                let timerCounter = 1500;
+
+                const interval = setInterval(() => {
+                    if (timerCounter <= 1) {
+                        clearInterval(interval);
+                    }
+
+                    console.log(timerCounter);
+
+                    timerCounter = timerCounter - 1;
+
+                    var minutes = Math.floor(timerCounter/60);
+                    var seconds = timerCounter%60;
+
+                    if (seconds < 10){
+                        timerElement.innerHTML = minutes + ":0" + seconds;
+                    }
+                    else{
+                        timerElement.innerHTML = minutes + ":" + seconds;
+                    }
+                }, 1000);
+            }
+        </script>
     </body>
 </html>

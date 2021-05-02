@@ -1,16 +1,14 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 import requests, json
+import time
+
 app = Flask(__name__)
 
-mins = 25
-sec = "00"
+#when play is pressed
+@app.route("/", methods=['GET','POST'])
+def index():
 
-def start():
-    print("hi")
-
-@app.route("/")
-def main():
-    return render_template('index.html', minute = mins, seconds = sec)
+    return render_template('index.html')
 
 @app.route("/page2")
 def page2():
