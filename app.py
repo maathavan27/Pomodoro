@@ -10,6 +10,8 @@ sec = "00"
 def start():
     global mins, sec
     sec = str(int(sec) - 1)
+    if len(sec) == 1:
+        sec = '0' + sec
     if sec == "-1":
         sec = "59"
         mins = str(int(mins) - 1)
