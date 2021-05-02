@@ -64,6 +64,9 @@
             var maxTime = regular;
 
             function restartTimer() {
+                if (isOn == false) {
+                    return;
+                }
                 isOn = false;
                 timerElement.innerHTML = "25:00";
                 stateElement.innerHTML = "Work";
