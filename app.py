@@ -8,8 +8,11 @@ sec = "00"
 
 @app.route("/start") #play button
 def start():
-    mins = "24"
-    sec = "59"
+    global mins, sec
+    sec = str(int(sec) - 1)
+    if sec == "-1":
+        sec = "59"
+        mins = str(int(mins) - 1)
     return render_template('index.html', minute = mins, seconds = sec)
     
 @app.route("/") #page load/restart button
