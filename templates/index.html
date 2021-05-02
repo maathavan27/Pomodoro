@@ -7,29 +7,35 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.5.9/css/uikit.min.css"/>
         <link href="css/styles.css" rel="stylesheet">
     </head>
-    <body>
+    <body style = "background-color: cornsilk;">
         <div class = "uk-container">
             <!--Header-->
-            <h1 class="uk-text-center">Pomodoro App</h1>
+            <h1 class="uk-text-center"style = "position:relative; top:30px; ">Pomodoro App</h1>
             <!-- Timer-->
             <div class = "uk-container">
                 <div class=" uk-position-medium uk-position-center uk-text-center uk-margin-large-top" uk-grid>
                     <div>
-                        <div class="uk-background-secondary uk-padding uk-light" id="timer">25:00</div>
+                        <div class="uk-background-secondary uk-padding uk-padding-remove-bottom uk-light uk-text-large" id="timer" style="font-size: 100px; position:relative; top:-70px;right:20px">25:00</div>
+                        <div class="uk-background-secondary uk-padding-small uk-padding-remove-top uk-light uk-text-small" id="state" style="font-size: 50px; position:relative; top:-70px;right:20px">Work</div>
                     </div>
                 </div>
+                
             </div>
         </div>
         <!-- Start and restart-->
-        <div class = "uk-container">
-            <button class="uk-button uk-button-secondary" onclick="startTimer()">Play</button>
+        <div class = "uk-container uk-container-small" style = "position:relative; left:346px; top:525px; ">
+            <button class="uk-button uk-button-secondary " onclick="startTimer()" id = "play_button" >Play</button>
             <button class="uk-button uk-button-secondary" onclick="restartTimer()">Restart</button>
         </div>
-
+      
         <!--source: https://notificationsounds.com/notification-sounds/long-expected-548-->
         <audio preload="auto" id="audio">
             <source src="../notification.mp3" type="audio/mpeg">
         </audio>
+
+        <div class = "uk-container" style = "position:relative; left:0px; top:550px;">
+            <progress id="js-progressbar" class="uk-progress" value="0" max="1500" ></progress>
+        </div>
 
         <script type=text/javascript src="{{
             url_for('static', filename='jquery.js') }}"></script>
@@ -38,9 +44,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.5.9/js/uikit-icons.min.js" 
                 integrity="sha512-hcz3GoZLfjU/z1OyArGvM1dVgrzpWcU3jnYaC6klc2gdy9HxrFkmoWmcUYbraeS+V/GWSgfv6upr9ff4RVyQPw==" crossorigin="anonymous"></script>     
 
+
         <script type="application/javascript">
             var isOn = false;
+            var bar = document.getElementById('js-progressbar');
             const timerElement = document.getElementById("timer");
+            const playbutton = document.getElementById("play_button");
+            var stateElement = document.getElementById("state");
             let timerCounter;
             var quitTimer = false;
             var shortPauseCount = 0;
@@ -56,11 +66,15 @@
             function restartTimer() {
                 isOn = false;
                 timerElement.innerHTML = "25:00";
+                stateElement.innerHTML = "Work";
                 timerCounter = maxTime;
                 console.log("Restart");
                 quitTimer = true;
+                playbutton.disabled= false;
+                bar.value =0; 
             } 
             function startTimer(){
+                playbutton.disabled = true;
                 if (isOn || quitTimer) {
                     isOn = false;
                     quitTimer = false;
@@ -78,26 +92,31 @@
                         // play notification sound from the start
                         audioElement.currentTime = 0;
                         audioElement.play();
-                        
-                        //clearInterval(interval);
+
                         if (maxTime == regular) { //end of regular -> either short pause or long pause
                             if (shortPauseCount == 4) {
+                                stateElement.innerHTML = "Long Break";
                                 maxTime = longPause;
                                 shortPauseCount = 0;
                             } else {
+                                stateElement.innerHTML = "Short Break";
                                 maxTime = shortPause;
                                 shortPauseCount++;
                             }
                         } else if (maxTime == shortPause) { //end of short pause -> back to regular
+                            stateElement.innerHTML = "Work";
                             maxTime = regular;
                         } else if (maxTime == longPause) { //end of long pause -> back to regular
+                            stateElement.innerHTML = "Work"
                             maxTime = regular;
                         }
                         timerCounter = maxTime;
+                        bar.max = maxTime;
+                        bar.value =0; 
                     }
 
                     console.log(timerCounter);
-
+                    bar.value +=1; 
                     timerCounter = timerCounter - 1;
 
                     var minutes = Math.floor(timerCounter/60);
