@@ -15,9 +15,11 @@
             <div class = "uk-container">
                 <div class=" uk-position-medium uk-position-center uk-text-center uk-margin-large-top" uk-grid>
                     <div>
-                        <div class="uk-background-secondary uk-padding uk-light uk-text-large" id="timer" style="font-size: 100px; position:relative; top:-70px;right:20px">25:00</div>
+                        <div class="uk-background-secondary uk-padding uk-padding-remove-bottom uk-light uk-text-large" id="timer" style="font-size: 100px; position:relative; top:-70px;right:20px">25:00</div>
+                        <div class="uk-background-secondary uk-padding-small uk-padding-remove-top uk-light uk-text-small" id="state" style="font-size: 50px; position:relative; top:-70px;right:20px">Work</div>
                     </div>
                 </div>
+                
             </div>
         </div>
         <!-- Start and restart-->
@@ -37,7 +39,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.5.9/js/uikit-icons.min.js" 
                 integrity="sha512-hcz3GoZLfjU/z1OyArGvM1dVgrzpWcU3jnYaC6klc2gdy9HxrFkmoWmcUYbraeS+V/GWSgfv6upr9ff4RVyQPw==" crossorigin="anonymous"></script>
 
-            
 
         <script type="application/javascript">
             var isOn = false;
@@ -77,21 +78,22 @@
                         return;
                     }
                     if (timerCounter <= 0) {
-                        //clearInterval(interval);
+                        var stateElement = document.getElementById("state");
                         if (maxTime == regular) { //end of regular -> either short pause or long pause
                             if (shortPauseCount == 4) {
-                                
+                                stateElement.innerHTML = "Long Break";
                                 maxTime = longPause;
                                 shortPauseCount = 0;
                             } else {
-                                
+                                stateElement.innerHTML = "Short Break";
                                 maxTime = shortPause;
                                 shortPauseCount++;
                             }
                         } else if (maxTime == shortPause) { //end of short pause -> back to regular
+                            stateElement.innerHTML = "Work";
                             maxTime = regular;
-                           
                         } else if (maxTime == longPause) { //end of long pause -> back to regular
+                            stateElement.innerHTML = "Work"
                             maxTime = regular;
                         }
                         timerCounter = maxTime;
