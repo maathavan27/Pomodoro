@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, send_file
 import requests, json
 import time
 
@@ -10,9 +10,9 @@ def index():
 
     return render_template('index.html')
 
-@app.route("/page2")
-def page2():
-    return
+@app.route("/notification.mp3")
+def notification():
+    return send_file('notification.mp3', attachment_filename='notification.mp3')
 
 if __name__ == '__main__':
     app.run(debug=True)
