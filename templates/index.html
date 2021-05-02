@@ -15,8 +15,8 @@
             <div class = "uk-container">
                 <div class=" uk-position-medium uk-position-center uk-text-center uk-margin-large-top" uk-grid>
                     <div>
-                        <div class="uk-background-secondary uk-padding uk-padding-remove-bottom uk-light uk-text-large" id="timer" style="font-size: 100px; position:relative; top: -175px;right:20px">25:00</div>
-                        <div class="uk-background-secondary uk-padding-small uk-padding-remove-top uk-light uk-text-small" id="state" style="font-size: 50px; position:relative; top:-175px;right:20px">Work</div>
+                        <div class="uk-background-secondary uk-padding uk-padding-remove-bottom uk-light uk-text-large" id="timer" style="font-size: 100px; top: -175px;right:20px;">25:00</div>
+                        <div class="uk-background-secondary uk-padding-small uk-padding-remove-top uk-light uk-text-small" id="state" style="font-size: 50px; top:-175px;right:20px">Work</div>
                     </div>
                 </div>
                 
@@ -90,6 +90,7 @@
                     if (quitTimer) {
                         return;
                     }
+                    isOn = true;
                     if (timerCounter <= 0) {
 
                         // play notification sound from the start
