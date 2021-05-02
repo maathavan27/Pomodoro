@@ -23,7 +23,7 @@
         <!-- Start and restart-->
         <div class = "uk-container">
             <button class="uk-button uk-button-secondary" onclick="startTimer()">Play</button>
-            <button class="uk-button uk-button-secondary">Restart</button>
+            <button class="uk-button uk-button-secondary" onclick="restartTimer()">Restart</button>
         </div>
         <script type=text/javascript src="{{
             url_for('static', filename='jquery.js') }}"></script>
@@ -33,13 +33,46 @@
                 integrity="sha512-hcz3GoZLfjU/z1OyArGvM1dVgrzpWcU3jnYaC6klc2gdy9HxrFkmoWmcUYbraeS+V/GWSgfv6upr9ff4RVyQPw==" crossorigin="anonymous"></script>
 
         <script type="application/javascript">
+            var isOn = false;
+            const timerElement = document.getElementById("timer");
+            let timerCounter;
+            var quitTimer = false;
+
+            var regular = 10; //25 mins
+            var shortPause = 300; //5 mins
+            var longPause = 1200; //20 mins
+            var maxTime = regular;
+
+            function restartTimer() {
+                isOn = false;
+                timerElement.innerHTML = "25:00";
+                timerCounter = maxTime;
+                console.log("Restart");
+                quitTimer = true;
+            }
             function startTimer(){
-                const timerElement = document.getElementById("timer");
-                let timerCounter = 1500;
+                if (isOn || quitTimer) {
+                    isOn = false;
+                    quitTimer = false;
+                    return;
+                }
+                isOn = true;
+                timerCounter = maxTime;
 
                 const interval = setInterval(() => {
-                    if (timerCounter <= 1) {
+                    if (quitTimer) {
+                        return;
+                    }
+                    if (timerCounter <= 0) {
                         clearInterval(interval);
+                        if (maxTime == regular) { //end of regular -> either short pause or long pause
+                            maxTime = shortPause;
+                        } else if (maxTime == shortPause) { //end of short pause -> back to regular
+                            maxTime = regular;
+                        } else if (maxTime == longPause) { //end of long pause -> back to regular
+                            maxTime = regular;
+                        }
+                        timerCounter = maxTime;
                     }
 
                     console.log(timerCounter);
