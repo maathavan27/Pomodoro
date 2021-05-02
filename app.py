@@ -19,7 +19,10 @@ def start():
     
 @app.route("/") #page load/restart button
 def main():
-    return render_template('index.html', minute = "25", seconds = "00")
+    global mins, sec
+    mins = "25"
+    sec = "00"
+    return render_template('index.html', minute = mins, seconds = sec)
 
 @app.route("/page2")
 def page2():
