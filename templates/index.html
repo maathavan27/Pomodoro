@@ -45,6 +45,7 @@
             var bar = document.getElementById('js-progressbar');
             const timerElement = document.getElementById("timer");
             const playbutton = document.getElementById("play_button");
+            var stateElement = document.getElementById("state");
             let timerCounter;
             var quitTimer = false;
             var shortPauseCount = 0;
@@ -57,6 +58,7 @@
             function restartTimer() {
                 isOn = false;
                 timerElement.innerHTML = "25:00";
+                stateElement.innerHTML = "Work";
                 timerCounter = maxTime;
                 console.log("Restart");
                 quitTimer = true;
@@ -78,7 +80,6 @@
                         return;
                     }
                     if (timerCounter <= 0) {
-                        var stateElement = document.getElementById("state");
                         if (maxTime == regular) { //end of regular -> either short pause or long pause
                             if (shortPauseCount == 4) {
                                 stateElement.innerHTML = "Long Break";
