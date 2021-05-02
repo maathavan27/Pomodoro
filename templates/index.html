@@ -37,6 +37,7 @@
             const timerElement = document.getElementById("timer");
             let timerCounter;
             var quitTimer = false;
+            var shortPauseCount = 0;
 
             var regular = 1500; //25 mins
             var shortPause = 300; //5 mins
@@ -64,9 +65,15 @@
                         return;
                     }
                     if (timerCounter <= 0) {
-                        clearInterval(interval);
+                        //clearInterval(interval);
                         if (maxTime == regular) { //end of regular -> either short pause or long pause
-                            maxTime = shortPause;
+                            if (shortPauseCount == 4) {
+                                maxTime = longPause;
+                                shortPauseCount = 0;
+                            } else {
+                                maxTime = shortPause;
+                                shortPauseCount++;
+                            }
                         } else if (maxTime == shortPause) { //end of short pause -> back to regular
                             maxTime = regular;
                         } else if (maxTime == longPause) { //end of long pause -> back to regular
