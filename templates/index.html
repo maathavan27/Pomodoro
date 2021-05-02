@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.5.9/css/uikit.min.css"/>
         <link href="css/styles.css" rel="stylesheet">
     </head>
-    <body>
+    <body style = "background-color: cornsilk;">
         <div class = "uk-container">
             <!--Header-->
             <h1 class="uk-text-center">Pomodoro App</h1>
@@ -15,14 +15,14 @@
             <div class = "uk-container">
                 <div class=" uk-position-medium uk-position-center uk-text-center uk-margin-large-top" uk-grid>
                     <div>
-                        <div class="uk-background-secondary uk-padding uk-light" id="timer">25:00</div>
+                        <div class="uk-background-secondary uk-padding uk-light uk-text-large" id="timer" style="font-size: 100px">25:00</div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Start and restart-->
         <div class = "uk-container">
-            <button class="uk-button uk-button-secondary" onclick="startTimer()">Play</button>
+            <button class="uk-button uk-button-secondary " onclick="startTimer()" id = "play_button" >Play</button>
             <button class="uk-button uk-button-secondary" onclick="restartTimer()">Restart</button>
         </div>
         <script type=text/javascript src="{{
@@ -35,6 +35,7 @@
         <script type="application/javascript">
             var isOn = false;
             const timerElement = document.getElementById("timer");
+            const playbutton = document.getElementById("play_button");
             let timerCounter;
             var quitTimer = false;
             var shortPauseCount = 0;
@@ -50,8 +51,10 @@
                 timerCounter = maxTime;
                 console.log("Restart");
                 quitTimer = true;
+                playbutton.disabled= false;
             } 
             function startTimer(){
+                playbutton.disabled = true;
                 if (isOn || quitTimer) {
                     isOn = false;
                     quitTimer = false;
