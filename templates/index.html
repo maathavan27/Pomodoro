@@ -22,7 +22,7 @@
         </div>
         <!-- Start and restart-->
         <div class = "uk-container">
-            <button class="uk-button uk-button-secondary" onclick="startTimer()">Play</button>
+            <button class="uk-button uk-button-secondary" onclick="startTimer()" id = "play_button">Play</button>
             <button class="uk-button uk-button-secondary" onclick="restartTimer()">Restart</button>
         </div>
         <script type=text/javascript src="{{
@@ -35,6 +35,7 @@
         <script type="application/javascript">
             var isOn = false;
             const timerElement = document.getElementById("timer");
+            const playbutton = document.getElementById("play_button");
             let timerCounter;
             var quitTimer = false;
             var shortPauseCount = 0;
@@ -50,8 +51,10 @@
                 timerCounter = maxTime;
                 console.log("Restart");
                 quitTimer = true;
+                playbutton.disabled= false;
             } 
             function startTimer(){
+                playbutton.disabled = true;
                 if (isOn || quitTimer) {
                     isOn = false;
                     quitTimer = false;
